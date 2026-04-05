@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>O nama — Cool Taxi Kragujevac</title>
+  <meta name="description" content="Saznajte više o Cool Taxi Kragujevac — naša istorija, misija i tim.">
+  <link rel="icon" href="assets/img/ct-logo.png" type="image/png">
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <style>
+    /* ===== ABOUT HERO ===== */
+    .about-hero {
+      background: linear-gradient(165deg, var(--white) 0%, var(--gray-50) 60%, var(--green-light) 100%);
+      text-align: center;
+      padding: 120px 24px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .about-hero::before {
+      content: '';
+      position: absolute;
+      top: -150px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 800px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(75,179,75,0.06) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+
+    .about-hero .container { position: relative; z-index: 2; }
+
+    .about-hero h1 {
+      font-size: clamp(2.5rem, 5vw, 3.5rem);
+      margin-bottom: 20px;
+      letter-spacing: -1px;
+    }
+
+    .about-hero h1 .highlight { color: var(--green-primary); }
+
+    .about-hero p {
+      font-size: 1.15rem;
+      color: var(--text-secondary);
+      max-width: 580px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    /* ===== STORY SECTION ===== */
+    .story-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .story-image {
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      box-shadow: var(--shadow-xl);
+    }
+
+    .story-image img { width: 100%; display: block; }
+
+    .story-content h2 { font-size: 2rem; margin-bottom: 20px; }
+    .story-content h2 .highlight { color: var(--green-primary); }
+
+    .story-content p {
+      color: var(--text-secondary);
+      font-size: 1rem;
+      line-height: 1.8;
+      margin-bottom: 16px;
+    }
+
+    .story-values {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 28px;
+    }
+
+    .value-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .value-icon {
+      width: 36px;
+      height: 36px;
+      min-width: 36px;
+      border-radius: 10px;
+      background: var(--green-glow);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .value-icon svg {
+      width: 18px;
+      height: 18px;
+      color: var(--green-primary);
+    }
+
+    .value-item strong { display: block; font-size: 0.9rem; margin-bottom: 2px; }
+    .value-item span { font-size: 0.8rem; color: var(--text-muted); }
+
+    /* ===== MILESTONE HORIZONTAL SCROLL SECTION ===== */
+    .milestone-section {
+      padding: 0;
+      position: relative;
+      background: var(--charcoal);
+      overflow: hidden;
+    }
+
+    .milestone-sticky {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .milestone-header {
+      text-align: center;
+      padding: 0 24px;
+      margin-bottom: 48px;
+    }
+
+    .milestone-header .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 16px;
+      background: rgba(75,179,75,0.15);
+      color: var(--green-primary);
+      border-radius: 100px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 12px;
+    }
+
+    .milestone-header h2 {
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+      color: var(--white);
+    }
+
+    .road-container {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    .road-track {
+      display: flex;
+      gap: 0;
+      will-change: transform;
+      transition: none;
+    }
+
+    .road-bg {
+      position: absolute;
+      bottom: 94px;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: rgba(255,255,255,0.06);
+    }
+
+    .road-dashes {
+      position: absolute;
+      bottom: 95px;
+      left: 0;
+      width: 300%;
+      height: 2px;
+      background: repeating-linear-gradient(90deg, rgba(255,255,255,0.15) 0px, rgba(255,255,255,0.15) 20px, transparent 20px, transparent 40px);
+    }
+
+    /* Each milestone card */
+    .milestone-item {
+      min-width: 300px;
+      padding: 0 28px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      position: relative;
+    }
+
+    /* Icon circle per milestone */
+    .milestone-icon {
+      width: 72px;
+      height: 72px;
+      border-radius: 20px;
+      background: rgba(75,179,75,0.15);
+      border: 1.5px solid rgba(75,179,75,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+      font-size: 1.9rem;
+      transition: background-color 0.3s ease;
+    }
+
+    .milestone-item:hover .milestone-icon {
+      background: rgba(75,179,75,0.25);
+    }
+
+    .milestone-item .year {
+      font-family: 'Outfit', sans-serif;
+      font-size: 2.2rem;
+      font-weight: 900;
+      color: var(--green-primary);
+      margin-bottom: 8px;
+      line-height: 1;
+    }
+
+    .milestone-item .title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 8px;
+    }
+
+    .milestone-item .desc {
+      font-size: 0.82rem;
+      color: var(--gray-400);
+      line-height: 1.6;
+      max-width: 240px;
+    }
+
+    .milestone-item .dot {
+      width: 12px;
+      height: 12px;
+      background: var(--green-primary);
+      border-radius: 50%;
+      margin-top: 20px;
+      box-shadow: 0 0 12px rgba(75,179,75,0.5);
+      position: relative;
+    }
+
+    .milestone-item .dot::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 24px;
+      height: 24px;
+      border: 2px solid rgba(75,179,75,0.3);
+      border-radius: 50%;
+    }
+
+    /* Taxi car on road */
+    .taxi-on-road {
+      position: absolute;
+      bottom: 80px;
+      left: 40px;
+      width: 60px;
+      height: 30px;
+      transition: none;
+      will-change: left;
+      z-index: 10;
+    }
+
+    .taxi-on-road svg { width: 100%; height: 100%; }
+
+    .milestone-progress-bar {
+      position: absolute;
+      bottom: 40px;
+      left: 24px;
+      right: 24px;
+      height: 6px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 3px;
+    }
+
+    .milestone-progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--green-primary), #6FD36F);
+      border-radius: 3px;
+      transition: width 0.05s linear;
+    }
+
+    /* ===== NUMBERS / STATS ===== */
+    .stats-section { background: var(--white); }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+    }
+
+    .stat-card {
+      text-align: center;
+      padding: 40px 20px;
+      background: var(--gray-50);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--gray-200);
+      transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .stat-card:hover {
+      border-color: var(--green-primary);
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .stat-card .number {
+      font-family: 'Outfit', sans-serif;
+      font-size: 2.8rem;
+      font-weight: 900;
+      color: var(--green-primary);
+      line-height: 1;
+    }
+
+    .stat-card .label {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      margin-top: 8px;
+    }
+
+    /* ===== TEAM ===== */
+    .team-banner {
+      background: linear-gradient(135deg, var(--green-primary), #3DB83D);
+      color: var(--white);
+      border-radius: var(--radius-xl);
+      padding: 60px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .team-banner::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -30%;
+      width: 400px;
+      height: 400px;
+      background: rgba(255,255,255,0.06);
+      border-radius: 50%;
+    }
+
+    .team-banner h2 { font-size: 2rem; margin-bottom: 16px; }
+    .team-banner p { opacity: 0.9; line-height: 1.7; font-size: 1rem; }
+
+    .team-banner-right {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .team-item {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      background: rgba(255,255,255,0.12);
+      border-radius: var(--radius-md);
+      padding: 16px 20px;
+    }
+
+    .team-item .num {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 800;
+    }
+
+    .team-item span { font-size: 0.9rem; opacity: 0.9; }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 1024px) {
+      .story-grid { grid-template-columns: 1fr; gap: 32px; }
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+      .team-banner { grid-template-columns: 1fr; padding: 40px; }
+    }
+
+    @media (max-width: 768px) {
+      .about-hero { padding: 80px 16px 60px; }
+      .story-values { grid-template-columns: 1fr; }
+      .milestone-item { min-width: 260px; padding: 0 20px; }
+      .milestone-icon { width: 56px; height: 56px; font-size: 1.5rem; }
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+      .team-banner { padding: 32px; }
+    }
+
+    @media (max-width: 480px) {
+      .stats-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Loading Screen -->
+  <div class="loader-screen">
+    <img src="assets/img/ct-logo.png" alt="CT" class="loader-logo">
+    <div class="loader-car"></div>
+  </div>
+
+  <!-- Progress Bar -->
+  <div class="top-progress-bar"><div class="fill"></div></div>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">
+        <img src="assets/img/ct-logo.png" alt="Cool Taxi">
+        <span class="cool">cool</span><span class="taxi">taxi</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">Početna</a></li>
+        <li><a href="about.html" class="active">O nama</a></li>
+        <li><a href="cenovnik.html">Cenovnik</a></li>
+        <li><a href="kontakt.html">Kontakt</a></li>
+      </ul>
+      <div class="nav-cta">
+        <a href="tel:034200555" class="nav-phone">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          034 200 555
+        </a>
+        <a href="tel:034200555" class="btn-primary">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          Pozovi Taxi
+        </a>
+      </div>
+      <button class="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu">
+    <a href="index.html">Početna</a>
+    <a href="about.html" class="active">O nama</a>
+    <a href="cenovnik.html">Cenovnik</a>
+    <a href="kontakt.html">Kontakt</a>
+    <div class="mobile-phone">
+      <a href="tel:034200555" class="btn-primary" style="padding:14px 36px;font-size:1rem;">Pozovi 034 200 555</a>
+    </div>
+  </div>
+
+  <!-- Phone Float -->
+  <a href="tel:034200555" class="phone-float">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+    <span class="tooltip">034 200 555</span>
+  </a>
+
+  <!-- ==================== HERO ==================== -->
+  <section class="about-hero">
+    <div class="container">
+      <div class="section-header" style="margin-bottom:0;">
+        <div class="badge">O nama</div>
+        <h1>Upoznajte <span class="highlight">Cool Taxi</span></h1>
+        <p>Više od decenije povezujemo stanovnike Kragujevca sa destinacijama brzo, sigurno i sa osmehom.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== NAŠA PRIČA ==================== -->
+  <section class="section">
+    <div class="container">
+      <div class="story-grid">
+        <div class="story-image reveal-left">
+          <img src="assets/img/fleet.png" alt="Flota Cool Taxi">
+        </div>
+        <div class="story-content reveal-right">
+          <h2>Naša <span class="highlight">priča</span></h2>
+          <p>Cool Taxi je osnovan sa jasnom vizijom — učiniti taxi prevoz u Kragujevcu kvalitetnijim, modernijim i dostupnijim svim građanima.</p>
+          <p>Od prvog dana smo se fokusirali na ono što je najvažnije: brzo stizanje, prijatnu vožnju i poštene cene. Danas sa flotom od preko 50 vozila pokrivamo ceo grad i šire.</p>
+          <p>Naši vozači prolaze obuku, redovne kontrole i posvećeni su vašoj bezbednosti. Svako vozilo je opremljeno GPS sistemom i klima uređajem.</p>
+
+          <div class="story-values">
+            <div class="value-item">
+              <div class="value-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+              </div>
+              <div><strong>Pouzdanost</strong><span>Uvek stižemo na vreme</span></div>
+            </div>
+            <div class="value-item">
+              <div class="value-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              </div>
+              <div><strong>Bezbednost</strong><span>GPS praćenje i osiguranje</span></div>
+            </div>
+            <div class="value-item">
+              <div class="value-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+              </div>
+              <div><strong>Ljubaznost</strong><span>Profesionalni i prijatni vozači</span></div>
+            </div>
+            <div class="value-item">
+              <div class="value-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+              </div>
+              <div><strong>Fer cene</strong><span>Transparentno, bez skrivenih troškova</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== STATS ==================== -->
+  <section class="section stats-section">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="badge">Cool Taxi u brojevima</div>
+        <h2>Rezultati govore</h2>
+      </div>
+      <div class="stats-grid">
+        <div class="stat-card reveal" style="transition-delay:0.05s">
+          <div class="number">15+</div>
+          <div class="label">Godina iskustva</div>
+        </div>
+        <div class="stat-card reveal" style="transition-delay:0.15s">
+          <div class="number">50+</div>
+          <div class="label">Vozila u floti</div>
+        </div>
+        <div class="stat-card reveal" style="transition-delay:0.25s">
+          <div class="number">500K+</div>
+          <div class="label">Obavljenih vožnji</div>
+        </div>
+        <div class="stat-card reveal" style="transition-delay:0.35s">
+          <div class="number">24/7</div>
+          <div class="label">Dostupnost</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== TEAM BANNER ==================== -->
+  <section class="section">
+    <div class="container">
+      <div class="team-banner reveal">
+        <div>
+          <h2>Naš tim čini razliku</h2>
+          <p>Iza svakog poziva stoji profesionalan tim dispečera i iskusnih vozača koji se trude da vaša vožnja bude savršena. Svaki vozač prolazi rigoroznu obuku i redovne provere.</p>
+        </div>
+        <div class="team-banner-right">
+          <div class="team-item">
+            <div class="num">60+</div>
+            <span>Profesionalnih vozača</span>
+          </div>
+          <div class="team-item">
+            <div class="num">10</div>
+            <span>Dispečera na liniji 24/7</span>
+          </div>
+          <div class="team-item">
+            <div class="num">100%</div>
+            <span>Licenciranih i osiguranih</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo">
+          <img src="assets/img/ct-logo.png" alt="CT">
+          <span>cool<span style="color:var(--green-primary)">taxi</span></span>
+        </div>
+        <p>Pouzdan taxi prevoz u Kragujevcu od 2009. godine. Brzo, sigurno i pristupačno — kad god vam treba.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Stranice</h4>
+        <a href="index.html">Početna</a>
+        <a href="about.html">O nama</a>
+        <a href="cenovnik.html">Cenovnik</a>
+        <a href="kontakt.html">Kontakt</a>
+      </div>
+      <div class="footer-col">
+        <h4>Usluge</h4>
+        <a href="#">Gradska vožnja</a>
+        <a href="#">Međugradski</a>
+        <a href="#">Aerodrom</a>
+        <a href="#">Korporativni</a>
+      </div>
+      <div class="footer-col">
+        <h4>Kontakt</h4>
+        <a href="tel:034200555">034 200 555</a>
+        <a href="mailto:info@cooltaxi.rs">info@cooltaxi.rs</a>
+        <a href="#">Kragujevac, Srbija</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Cool Taxi Kragujevac. Sva prava zadržana.</span>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js"></script>
+  <script>
+    // ===== HORIZONTAL TAXI SCROLL MILESTONE =====
+    (function() {
+      const section = document.getElementById('milestone');
+      const track = document.getElementById('roadTrack');
+      const taxi = document.getElementById('taxiOnRoad');
+      const progressFill = document.getElementById('milestoneProgress');
+      if (!section || !track) return;
+
+      function handleScroll() {
+        const rect = section.getBoundingClientRect();
+        const sectionHeight = section.offsetHeight;
+        const viewH = window.innerHeight;
+
+        const scrolled = -rect.top;
+        const maxScroll = sectionHeight - viewH;
+        let progress = Math.max(0, Math.min(1, scrolled / maxScroll));
+
+        const items = track.children.length;
+        const itemWidth = track.children[0] ? track.children[0].offsetWidth : 300;
+        const totalWidth = itemWidth * items;
+        const containerWidth = track.parentElement.offsetWidth;
+        const maxTranslate = Math.max(0, totalWidth - containerWidth + 60);
+
+        track.style.transform = `translateX(${-progress * maxTranslate}px)`;
+
+        if (taxi) {
+          const taxiMax = containerWidth - 80;
+          taxi.style.left = (40 + progress * taxiMax) + 'px';
+        }
+
+        if (progressFill) {
+          progressFill.style.width = (progress * 100) + '%';
+        }
+      }
+
+      window.addEventListener('scroll', handleScroll, { passive: true });
+      handleScroll();
+    })();
+  </script>
+</body>
+</html>
