@@ -221,14 +221,14 @@
     .hero-float-card {
       position: absolute;
       bottom: 40px;
-      left: 40px;
+      right: 40px;
       z-index: 5;
       background: rgba(255,255,255,0.97);
       border-radius: var(--radius-md);
-      padding: 18px 22px;
+      padding: 12px 16px;
       display: flex;
       align-items: center;
-      gap: 14px;
+      gap: 10px;
       box-shadow: 0 20px 60px rgba(0,0,0,0.25);
       animation: floatCard 3s ease-in-out infinite;
     }
@@ -239,8 +239,8 @@
     }
 
     .hero-float-card .icon-wrap {
-      width: 48px;
-      height: 48px;
+      width: 36px;
+      height: 36px;
       border-radius: 50%;
       background: var(--green-glow);
       display: flex;
@@ -250,21 +250,21 @@
     }
 
     .hero-float-card .icon-wrap svg {
-      width: 22px;
-      height: 22px;
+      width: 16px;
+      height: 16px;
       color: var(--green-primary);
     }
 
     .hero-float-card .card-info strong {
       display: block;
       font-family: 'Outfit', sans-serif;
-      font-size: 0.95rem;
+      font-size: 0.85rem;
       font-weight: 700;
       color: var(--text-primary);
     }
 
     .hero-float-card .card-info span {
-      font-size: 0.78rem;
+      font-size: 0.70rem;
       color: var(--text-muted);
     }
 
@@ -373,51 +373,59 @@
       background: var(--charcoal-light);
       border-radius: var(--radius-xl);
       border: 1px solid rgba(255,255,255,0.06);
-      padding: 40px;
+      padding: 24px;
       position: relative;
       overflow: hidden;
-      min-height: 340px;
     }
 
-    .map-svg { width: 100%; height: 300px; }
-    .map-road { stroke: rgba(255,255,255,0.08); stroke-width: 3; fill: none; }
-    .map-road-main { stroke: rgba(75,179,75,0.25); stroke-width: 4; fill: none; }
-    .taxi-dot { fill: var(--green-primary); filter: drop-shadow(0 0 8px rgba(75,179,75,0.6)); }
-    .taxi-dot-ring { fill: none; stroke: var(--green-primary); stroke-width: 1.5; opacity: 0.3; }
-    .pickup-dot { fill: #fff; filter: drop-shadow(0 0 6px rgba(255,255,255,0.4)); }
-    .pickup-pulse { fill: none; stroke: #fff; stroke-width: 1; opacity: 0; animation: pickupPulse 2s ease-out infinite; }
+    .map-svg {
+      width: 100%;
+      height: auto;
+      aspect-ratio: 1 / 1;
+      display: block;
+      max-width: 560px;
+      margin: 0 auto;
+    }
+    .map-road { stroke: rgba(255,255,255,0.08); stroke-width: 2; fill: none; }
+    .map-road-main { stroke: rgba(75,179,75,0.35); stroke-width: 3; fill: none; }
+    .taxi-dot { fill: var(--green-primary); filter: drop-shadow(0 0 10px rgba(75,179,75,0.8)); }
+    .taxi-dot-ring { fill: none; stroke: var(--green-primary); stroke-width: 1.5; opacity: 0.35; }
+    .pickup-dot { fill: #fff; filter: drop-shadow(0 0 8px rgba(255,255,255,0.5)); }
+    .pickup-pulse { fill: none; stroke: #fff; stroke-width: 1.5; opacity: 0; animation: pickupPulse 2s ease-out infinite; }
 
     @keyframes pickupPulse {
-      0% { r: 8; opacity: 0.6; }
-      100% { r: 30; opacity: 0; }
+      0% { r: 8; opacity: 0.7; }
+      100% { r: 40; opacity: 0; }
     }
 
-    .map-label { fill: var(--gray-400); font-family: 'DM Sans', sans-serif; font-size: 11px; }
+    .map-label { fill: rgba(255,255,255,0.55); font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 500; }
+    .map-label-small { fill: rgba(255,255,255,0.35); font-family: 'DM Sans', sans-serif; font-size: 9px; }
+    .map-pin-label { fill: white; font-size: 12px; font-family: 'Outfit', sans-serif; font-weight: 600; }
 
     .map-info-cards {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-      margin-top: 32px;
+      gap: 12px;
+      margin-top: 20px;
     }
 
     .map-info-card {
       background: rgba(255,255,255,0.04);
       border: 1px solid rgba(255,255,255,0.06);
       border-radius: var(--radius-md);
-      padding: 20px;
+      padding: 16px 12px;
       text-align: center;
     }
 
     .map-info-card .val {
       font-family: 'Outfit', sans-serif;
-      font-size: 1.5rem;
+      font-size: 1.3rem;
       font-weight: 800;
       color: var(--green-primary);
     }
 
     .map-info-card .desc {
-      font-size: 0.82rem;
+      font-size: 0.78rem;
       color: var(--gray-400);
       margin-top: 4px;
     }
@@ -650,12 +658,11 @@
       .hero-left { padding: 80px 32px 60px; }
       .hero-left::after { display: none; }
       .hero-right { height: 55vw; min-height: 320px; }
-      .hero-float-card { bottom: 20px; left: 20px; }
+      .hero-float-card { bottom: 20px; right: 20px; }
       .why-grid { grid-template-columns: 1fr 1fr; gap: 2px; }
       .features-grid { grid-template-columns: 1fr; gap: 40px; }
       .features-badge-float { top: auto; bottom: -16px; right: 16px; }
       .gallery-grid { grid-template-columns: 1fr 1fr; }
-      .map-info-cards { grid-template-columns: 1fr; }
     }
 
     @media (max-width: 768px) {
@@ -665,10 +672,31 @@
       .hero-stat:last-child { padding-left: 0; }
       .why-grid { grid-template-columns: 1fr; }
       .gallery-grid { grid-template-columns: 1fr; }
-      .map-animation-box { padding: 20px; }
+
+      /* Map animation edge-to-edge on mobile */
+      .taxi-map-section { padding: 56px 0; }
+      .taxi-map-section .container { padding: 0; }
+      .taxi-map-section .section-header { padding: 0 20px; margin-bottom: 28px; }
+      .map-animation-box {
+        border-radius: 0;
+        border-left: none;
+        border-right: none;
+        padding: 16px 12px;
+      }
+      .map-info-cards {
+        padding: 0 16px;
+        gap: 8px;
+        margin-top: 16px;
+      }
+      .map-info-card { padding: 14px 8px; }
+      .map-info-card .val { font-size: 1.1rem; }
+      .map-info-card .desc { font-size: 0.72rem; }
     }
 
     @media (max-width: 480px) {
+      .map-label { font-size: 13px; }
+      .map-label-small { font-size: 11px; }
+      .map-pin-label { font-size: 14px; }
       .hero-actions { flex-direction: column; }
       .hero-stats { gap: 0; }
       .cta-phone-big { font-size: 1.15rem; padding: 16px 28px; }
@@ -857,48 +885,53 @@
       </div>
 
       <div class="map-animation-box reveal">
-        <svg class="map-svg" viewBox="0 0 900 300">
-          <!-- Grid roads -->
-          <line x1="50" y1="50" x2="850" y2="50" class="map-road"/>
-          <line x1="50" y1="150" x2="850" y2="150" class="map-road"/>
-          <line x1="50" y1="250" x2="850" y2="250" class="map-road"/>
-          <line x1="150" y1="20" x2="150" y2="280" class="map-road"/>
-          <line x1="350" y1="20" x2="350" y2="280" class="map-road"/>
-          <line x1="550" y1="20" x2="550" y2="280" class="map-road"/>
-          <line x1="750" y1="20" x2="750" y2="280" class="map-road"/>
+        <svg class="map-svg" viewBox="0 0 360 360" preserveAspectRatio="xMidYMid meet">
+          <!-- 3 horizontal roads -->
+          <line x1="0" y1="60" x2="360" y2="60" class="map-road"/>
+          <line x1="0" y1="180" x2="360" y2="180" class="map-road"/>
+          <line x1="0" y1="300" x2="360" y2="300" class="map-road"/>
 
-          <!-- Main route path -->
-          <path d="M 120 250 L 350 250 L 350 150 L 550 150 L 550 50 L 720 50" class="map-road-main" stroke-dasharray="8 4"/>
+          <!-- 3 vertical roads -->
+          <line x1="60" y1="0" x2="60" y2="360" class="map-road"/>
+          <line x1="180" y1="0" x2="180" y2="360" class="map-road"/>
+          <line x1="300" y1="0" x2="300" y2="360" class="map-road"/>
 
-          <!-- Street labels — updated -->
-          <text x="200" y="270" class="map-label">Škerlićeva</text>
-          <text x="360" y="200" class="map-label">Kralja Aleksandra I</text>
-          <text x="555" y="100" class="map-label">Radoja Domanovića</text>
+          <!-- Main route — snakes from bottom-left to top-right -->
+          <path d="M 60 300 L 180 300 L 180 180 L 300 180 L 300 60"
+                class="map-road-main" stroke-dasharray="7 5"/>
 
-          <!-- Taxi (animated along path) -->
+          <!-- Street labels -->
+          <text x="85" y="320" class="map-label">Škerlićeva</text>
+          <text x="190" y="245" class="map-label">Kralja Aleksandra</text>
+          <text x="195" y="170" class="map-label">Radoja Domanovića</text>
+
+          <!-- Start point (bottom-left) -->
+          <circle cx="60" cy="300" r="6" fill="rgba(75,179,75,0.4)"/>
+          <text x="15" y="330" class="map-label-small">Start</text>
+
+          <!-- Pickup point (top-right) -->
+          <circle cx="300" cy="60" r="9" class="pickup-dot"/>
+          <circle cx="300" cy="60" class="pickup-pulse"/>
+          <circle cx="300" cy="60" class="pickup-pulse" style="animation-delay: 0.7s"/>
+          <text x="200" y="42" class="map-pin-label">Vaša lokacija</text>
+
+          <!-- Animated taxi -->
           <g>
             <circle r="18" class="taxi-dot-ring">
-              <animateMotion dur="6s" repeatCount="indefinite" path="M 120 250 L 350 250 L 350 150 L 550 150 L 550 50 L 720 50"/>
+              <animateMotion dur="5s" repeatCount="indefinite"
+                path="M 60 300 L 180 300 L 180 180 L 300 180 L 300 60"/>
               <animate attributeName="r" values="14;22;14" dur="2s" repeatCount="indefinite"/>
             </circle>
-            <circle r="7" class="taxi-dot">
-              <animateMotion dur="6s" repeatCount="indefinite" path="M 120 250 L 350 250 L 350 150 L 550 150 L 550 50 L 720 50"/>
+            <circle r="11" class="taxi-dot">
+              <animateMotion dur="5s" repeatCount="indefinite"
+                path="M 60 300 L 180 300 L 180 180 L 300 180 L 300 60"/>
             </circle>
-            <text fill="white" font-size="7" font-weight="bold" text-anchor="middle" dy="2.5">
-              <animateMotion dur="6s" repeatCount="indefinite" path="M 120 250 L 350 250 L 350 150 L 550 150 L 550 50 L 720 50"/>
+            <text fill="white" font-size="9" font-weight="bold" text-anchor="middle" dy="3" font-family="Outfit, sans-serif">
+              <animateMotion dur="5s" repeatCount="indefinite"
+                path="M 60 300 L 180 300 L 180 180 L 300 180 L 300 60"/>
               CT
             </text>
           </g>
-
-          <!-- Pickup point -->
-          <circle cx="720" cy="50" r="8" class="pickup-dot"/>
-          <circle cx="720" cy="50" class="pickup-pulse"/>
-          <circle cx="720" cy="50" class="pickup-pulse" style="animation-delay: 0.6s"/>
-          <text x="738" y="54" fill="white" font-size="11" font-family="Outfit, sans-serif" font-weight="600">Vaša lokacija</text>
-
-          <!-- Start point -->
-          <circle cx="120" cy="250" r="5" fill="rgba(75,179,75,0.4)"/>
-          <text x="70" y="242" fill="rgba(255,255,255,0.4)" font-size="10" font-family="DM Sans, sans-serif">Start</text>
         </svg>
 
         <div class="map-info-cards">
@@ -1032,12 +1065,12 @@
       <div class="footer-col">
         <h4>Kontakt</h4>
         <a href="tel:034200555">034 200 555</a>
-        <a href="mailto:info@cooltaxi.rs">info@cooltaxi.rs</a>
+        <a href="/cdn-cgi/l/email-protection#41282f272e01222e2e2d352039286f3332"><span class="__cf_email__" data-cfemail="472e292128072428282b33263f2e693534">[email&#160;protected]</span></a>
         <a href="#">Kragujevac, Srbija</a>
       </div>
     </div>
     <div class="footer-bottom">
-      <span>© 2026 Cool Taxi Kragujevac. Sva prava zadržana.</span>
+      <span>© 2026 Cool  Taxi Kragujevac. Sva prava zadržana.</span>
     </div>
   </footer>
 
