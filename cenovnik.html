@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cenovnik — Cool Taxi Kragujevac</title>
+  <meta name="description" content="Cenovnik Cool Taxi Kragujevac — fer cene za gradsku i međugradsku vožnju.">
+  <link rel="icon" href="assets/img/ct-logo.png" type="image/png">
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <style>
+    .price-hero {
+      background: linear-gradient(165deg, var(--white) 0%, var(--gray-50) 60%, var(--green-light) 100%);
+      text-align: center;
+      padding: 120px 24px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .price-hero::before {
+      content: '';
+      position: absolute;
+      top: -150px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 800px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(75,179,75,0.06) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+
+    .price-hero .container { position: relative; z-index: 2; }
+
+    .price-hero h1 {
+      font-size: clamp(2.5rem, 5vw, 3.5rem);
+      margin-bottom: 20px;
+      letter-spacing: -1px;
+    }
+
+    .price-hero h1 .highlight { color: var(--green-primary); }
+
+    .price-hero p {
+      font-size: 1.15rem;
+      color: var(--text-secondary);
+      max-width: 520px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    /* ===== PRICE TABS ===== */
+    .price-tabs {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 48px;
+      flex-wrap: wrap;
+    }
+
+    .price-tab {
+      padding: 10px 28px;
+      border-radius: 100px;
+      border: 1.5px solid var(--gray-300);
+      background: var(--white);
+      font-family: 'Outfit', sans-serif;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: color 0.25s ease, border-color 0.25s ease, background-color 0.25s ease;
+      color: var(--text-secondary);
+    }
+
+    .price-tab:hover {
+      border-color: var(--green-primary);
+      color: var(--green-primary);
+    }
+
+    .price-tab.active {
+      background: var(--green-primary);
+      color: var(--white);
+      border-color: var(--green-primary);
+    }
+
+    .price-panel { display: none; }
+    .price-panel.active { display: block; }
+
+    /* ===== TARIFF CARDS — only 2 now ===== */
+    .tariff-cards {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 28px;
+      margin-bottom: 48px;
+      max-width: 780px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .tariff-card {
+      background: var(--white);
+      border-radius: var(--radius-xl);
+      border: 1.5px solid var(--gray-200);
+      padding: 40px 32px;
+      text-align: center;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .tariff-card.featured {
+      border-color: var(--green-primary);
+      box-shadow: var(--shadow-green);
+    }
+
+    .tariff-card.featured::before {
+      content: 'Najčešće';
+      position: absolute;
+      top: 16px;
+      right: -28px;
+      background: var(--green-primary);
+      color: var(--white);
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 4px 36px;
+      transform: rotate(45deg);
+    }
+
+    .tariff-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .tariff-icon {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: var(--green-glow);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 24px;
+    }
+
+    .tariff-icon svg {
+      width: 28px;
+      height: 28px;
+      color: var(--green-primary);
+    }
+
+    .tariff-card h3 { font-size: 1.3rem; margin-bottom: 6px; }
+
+    .tariff-card .subtitle {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-bottom: 28px;
+    }
+
+    .tariff-price { margin-bottom: 28px; }
+
+    .tariff-price .start-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .tariff-price .amount {
+      font-family: 'Outfit', sans-serif;
+      font-size: 3rem;
+      font-weight: 900;
+      color: var(--text-primary);
+      line-height: 1;
+    }
+
+    .tariff-price .amount span {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    .tariff-price .per-km {
+      margin-top: 8px;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+    }
+
+    .tariff-price .per-km strong {
+      color: var(--green-primary);
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.1rem;
+    }
+
+    .tariff-details {
+      list-style: none;
+      text-align: left;
+      border-top: 1px solid var(--gray-100);
+      padding-top: 20px;
+    }
+
+    .tariff-details li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 0;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      border-bottom: 1px solid var(--gray-100);
+    }
+
+    .tariff-details li:last-child { border-bottom: none; }
+
+    .tariff-details li svg {
+      width: 16px;
+      height: 16px;
+      min-width: 16px;
+      color: var(--green-primary);
+    }
+
+    /* ===== INTERCITY TABLE ===== */
+    .intercity-table-wrap {
+      background: var(--white);
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--gray-200);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .intercity-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .intercity-table thead tr {
+      background: var(--charcoal);
+      color: var(--white);
+    }
+
+    .intercity-table th {
+      padding: 18px 24px;
+      text-align: left;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .intercity-table tbody tr {
+      border-bottom: 1px solid var(--gray-100);
+      transition: background-color 0.2s ease;
+    }
+
+    .intercity-table tbody tr:last-child { border-bottom: none; }
+    .intercity-table tbody tr:hover { background: var(--gray-50); }
+
+    .intercity-table td {
+      padding: 16px 24px;
+      font-size: 0.95rem;
+      color: var(--text-primary);
+    }
+
+    .intercity-table td.dist { color: var(--text-muted); font-size: 0.9rem; }
+
+    .intercity-table td.price-val {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      color: var(--green-primary);
+      font-size: 1rem;
+    }
+
+    /* ===== PRICE NOTE ===== */
+    .price-note {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      background: var(--green-light);
+      border: 1px solid rgba(75,179,75,0.2);
+      border-radius: var(--radius-md);
+      padding: 20px 24px;
+      margin-top: 24px;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    .price-note svg {
+      width: 20px;
+      height: 20px;
+      min-width: 20px;
+      color: var(--green-primary);
+      margin-top: 1px;
+    }
+
+    /* ===== CALCULATOR ===== */
+    .calc-section {
+      background: var(--charcoal);
+    }
+
+    .calc-card {
+      background: var(--charcoal-light);
+      border-radius: var(--radius-xl);
+      border: 1px solid rgba(255,255,255,0.06);
+      padding: 48px;
+      max-width: 620px;
+      margin: 0 auto;
+      text-align: center;
+      color: var(--white);
+    }
+
+    .calc-card h3 {
+      font-size: 1.6rem;
+      color: var(--white);
+      margin-bottom: 8px;
+    }
+
+    .calc-card .sub {
+      color: var(--gray-400);
+      font-size: 0.9rem;
+      margin-bottom: 36px;
+    }
+
+    .calc-group {
+      text-align: left;
+      margin-bottom: 20px;
+    }
+
+    .calc-group label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--gray-400);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+    }
+
+    .calc-select,
+    .calc-input {
+      width: 100%;
+      padding: 14px 18px;
+      background: rgba(255,255,255,0.06);
+      border: 1.5px solid rgba(255,255,255,0.1);
+      border-radius: var(--radius-sm);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem;
+      color: var(--white);
+      outline: none;
+      transition: border-color 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .calc-select:focus,
+    .calc-input:focus {
+      border-color: var(--green-primary);
+      box-shadow: 0 0 0 3px rgba(75,179,75,0.15);
+    }
+
+    .calc-select option { background: var(--charcoal); color: var(--white); }
+
+    .calc-result {
+      background: rgba(75,179,75,0.12);
+      border: 1px solid rgba(75,179,75,0.25);
+      border-radius: var(--radius-md);
+      padding: 28px 24px;
+      margin-top: 28px;
+    }
+
+    .calc-result .label {
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--gray-400);
+      margin-bottom: 8px;
+    }
+
+    .calc-result .amount {
+      font-family: 'Outfit', sans-serif;
+      font-size: 3rem;
+      font-weight: 900;
+      color: var(--green-primary);
+      line-height: 1;
+    }
+
+    .calc-result .amount small { font-size: 1rem; color: var(--gray-400); font-weight: 500; }
+
+    .calc-result .breakdown {
+      font-size: 0.82rem;
+      color: var(--gray-500);
+      margin-top: 8px;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      .tariff-cards { grid-template-columns: 1fr; max-width: 400px; }
+      .calc-card { padding: 32px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Loading Screen -->
+  <div class="loader-screen">
+    <img src="logo.png" alt="CT" class="loader-logo">
+    <div class="loader-car"></div>
+  </div>
+
+  <!-- Progress Bar -->
+  <div class="top-progress-bar"><div class="fill"></div></div>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" >
+        <img src="logo.png" alt="Cool Taxi" class="nav-logo-img">
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">Početna</a></li>
+        <li><a href="about.html">O nama</a></li>
+        <li><a href="cenovnik.html" class="active">Cenovnik</a></li>
+        <li><a href="kontakt.html">Kontakt</a></li>
+      </ul>
+      <div class="nav-cta">
+        <a href="tel:034200555" class="nav-phone">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          034 200 555
+        </a>
+        <a href="tel:034200555" class="btn-primary">Pozovi Taxi</a>
+      </div>
+      <button class="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu">
+    <a href="index.html">Početna</a>
+    <a href="about.html">O nama</a>
+    <a href="cenovnik.html" class="active">Cenovnik</a>
+    <a href="kontakt.html">Kontakt</a>
+    <div class="mobile-phone">
+      <a href="tel:034200555" class="btn-primary" style="padding:14px 36px;font-size:1rem;">Pozovi 034 200 555</a>
+    </div>
+  </div>
+
+  <a href="tel:034200555" class="phone-float">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+    <span class="tooltip">034 200 555</span>
+  </a>
+
+  <!-- ==================== HERO ==================== -->
+  <section class="price-hero">
+    <div class="container">
+      <div class="section-header" style="margin-bottom:0;">
+        <div class="badge">Cenovnik</div>
+        <h1>Transparentne <span class="highlight">cene</span></h1>
+        <p>Bez skrivenih troškova — znate tačno koliko plaćate pre nego što sednete u taxi.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== PRICES ==================== -->
+  <section class="section">
+    <div class="container">
+
+      <div class="price-tabs reveal">
+        <button class="price-tab active" onclick="switchTab(this, 'gradski')">Gradski prevoz</button>
+        <button class="price-tab" onclick="switchTab(this, 'medjugradski')">Međugradski</button>
+      </div>
+
+      <!-- GRADSKI -->
+      <div class="price-panel active" id="panel-gradski">
+        <div class="tariff-cards">
+          <!-- Tarifa I -->
+          <div class="tariff-card featured reveal" style="transition-delay:0.05s">
+            <div class="tariff-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            </div>
+            <h3>Tarifa I</h3>
+            <div class="subtitle">06:00 — 22:00 (dnevna)</div>
+            <div class="tariff-price">
+              <div class="start-label">Start vožnje</div>
+              <div class="amount">170 <span>RSD</span></div>
+              <div class="per-km">+ <strong>65 RSD</strong>/km</div>
+            </div>
+            <ul class="tariff-details">
+              <li>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                Start: 170 RSD
+              </li>
+              <li>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                Cena po km: 65 RSD
+              </li>
+              <li>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                Čekanje: 600 RSD/h
+              </li>
+            </ul>
+          </div>
+
+          <!-- Tarifa II -->
+          <div class="tariff-card reveal" style="transition-delay:0.15s">
+            <div class="tariff-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            </div>
+            <h3>Tarifa II</h3>
+            <div class="subtitle">22:00 — 06:00 &amp; praznici</div>
+            <div class="tariff-price">
+              <div class="start-label">Start vožnje</div>
+              <div class="amount">190 <span>RSD</span></div>
+              <div class="per-km">+ <strong>80 RSD</strong>/km</div>
+            </div>
+            <ul class="tariff-details">
+              <li>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                Start: 190 RSD
+              </li>
+              <li>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                Cena po km: 80 RSD
+              </li>
+              <li>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                Čekanje: 700 RSD/h
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="price-note reveal">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+          <p><strong>Napomena:</strong> Prikazane cene su orijentacione i mogu varirati u zavisnosti od tačne udaljenosti. Konačna cena se obračunava po taksimetru. Za međugradske vožnje cene su fiksne i dogovaraju se unapred.</p>
+        </div>
+      </div>
+
+      <!-- MEDJUGRADSKI -->
+      <div class="price-panel" id="panel-medjugradski">
+        <div class="intercity-table-wrap reveal">
+          <table class="intercity-table">
+            <thead>
+              <tr>
+                <th>Destinacija</th>
+                <th>Udaljenost</th>
+                <th>Cena (u jednom pravcu)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>Beograd</td><td class="dist">~140 km</td><td class="price-val">8.000 RSD</td></tr>
+              <tr><td>Beograd (aerodrom)</td><td class="dist">~160 km</td><td class="price-val">9.000 RSD</td></tr>
+              <tr><td>Niš</td><td class="dist">~130 km</td><td class="price-val">7.500 RSD</td></tr>
+              <tr><td>Niš (aerodrom)</td><td class="dist">~140 km</td><td class="price-val">8.000 RSD</td></tr>
+              <tr><td>Novi Sad</td><td class="dist">~220 km</td><td class="price-val">12.000 RSD</td></tr>
+              <tr><td>Čačak</td><td class="dist">~60 km</td><td class="price-val">4.000 RSD</td></tr>
+              <tr><td>Kraljevo</td><td class="dist">~65 km</td><td class="price-val">4.500 RSD</td></tr>
+              <tr><td>Jagodina</td><td class="dist">~50 km</td><td class="price-val">3.500 RSD</td></tr>
+              <tr><td>Topola</td><td class="dist">~35 km</td><td class="price-val">2.500 RSD</td></tr>
+              <tr><td>Aranđelovac</td><td class="dist">~45 km</td><td class="price-val">3.000 RSD</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="price-note reveal">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+          <p><strong>Napomena:</strong> Cene su fiksne i dogovaraju se pre polaska. Za destinacije koje nisu na listi, kontaktirajte nas na <strong>034 200 555</strong>. Mogući su popusti za redovne korisnike i povratne vožnje.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== CALCULATOR ==================== -->
+  <section class="section calc-section">
+    <div class="container">
+      <div class="section-header reveal" style="margin-bottom:48px;">
+        <div class="badge" style="background:rgba(75,179,75,0.15);color:var(--green-primary);">Kalkulator</div>
+        <h2 style="color:var(--white);">Izračunajte vožnju</h2>
+        <p style="color:rgba(255,255,255,0.55);">Okvirna cena pre nego što pozovete — brzo i jednostavno.</p>
+      </div>
+      <div class="calc-card reveal">
+        <div class="calc-group">
+          <label>Tarifa</label>
+          <select class="calc-select" id="calcTariff">
+            <option value="1">Tarifa I (06–22h) — Start 170 RSD + 65 RSD/km</option>
+            <option value="2">Tarifa II (22–06h, praznici) — Start 190 RSD + 80 RSD/km</option>
+          </select>
+        </div>
+
+        <div class="calc-group">
+          <label>Procenjena udaljenost (km)</label>
+          <input type="number" class="calc-input" id="calcKm" placeholder="npr. 5" min="0.5" max="500" value="5" step="0.5">
+        </div>
+
+        <div class="calc-result">
+          <div class="label">Okvirna cena</div>
+          <div class="amount" id="calcAmount">495 <small>RSD</small></div>
+          <div class="breakdown" id="calcBreakdown">Start 170 + 5 km × 65 = 495 RSD</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo">
+          <img src="assets/img/ct-logo.png" alt="CT">
+          <span>cool<span style="color:var(--green-primary)">taxi</span></span>
+        </div>
+        <p>Pouzdan taxi prevoz u Kragujevcu od 2009. godine.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Stranice</h4>
+        <a href="index.html">Početna</a>
+        <a href="about.html">O nama</a>
+        <a href="cenovnik.html">Cenovnik</a>
+        <a href="kontakt.html">Kontakt</a>
+      </div>
+      <div class="footer-col">
+        <h4>Usluge</h4>
+        <a href="#">Gradska vožnja</a>
+        <a href="#">Međugradski</a>
+        <a href="#">Aerodrom</a>
+        <a href="#">Korporativni</a>
+      </div>
+      <div class="footer-col">
+        <h4>Kontakt</h4>
+        <a href="tel:034200555">034 200 555</a>
+        <a href="mailto:info@cooltaxi.rs">info@cooltaxi.rs</a>
+        <a href="#">Kragujevac, Srbija</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Cool Taxi Kragujevac. Sva prava zadržana.</span>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js"></script>
+  <script>
+    // Tab switching
+    function switchTab(btn, tab) {
+      document.querySelectorAll('.price-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.price-panel').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('panel-' + tab).classList.add('active');
+    }
+
+    // Calculator — updated with correct starts
+    const calcTariff = document.getElementById('calcTariff');
+    const calcKm = document.getElementById('calcKm');
+    const calcAmount = document.getElementById('calcAmount');
+    const calcBreakdown = document.getElementById('calcBreakdown');
+
+    function calcPrice() {
+      const tariff = calcTariff.value;
+      const km = parseFloat(calcKm.value) || 0;
+      const start = tariff === '1' ? 170 : 190;
+      const perKm = tariff === '1' ? 65 : 80;
+      const total = Math.round(start + (km * perKm));
+      calcAmount.innerHTML = total.toLocaleString('sr') + ' <small>RSD</small>';
+      calcBreakdown.textContent = `Start ${start} + ${km} km × ${perKm} = ${total.toLocaleString('sr')} RSD`;
+    }
+
+    calcTariff.addEventListener('change', calcPrice);
+    calcKm.addEventListener('input', calcPrice);
+    calcPrice();
+  </script>
+</body>
+</html>
